@@ -4,7 +4,7 @@ This repository contains the solution for case studies in **[8WeekSQLChallenge](
 
 Thanks [DataWithDanny](https://github.com/DataWithDanny) for the excellent SQL case studies! 🏆
 
-Note: I'm using MySQL to work on this challenge.
+Note: I'm using **MySQL** to work on this challenge.
 
 ## Challenge case studies
 * 🍜 [Case Study #1 - Danny's Diner](https://github.com/mascalmeida/8-Week-SQL-Challenge/tree/main/Case%20Study%20%231%20-%20Danny's%20Diner)
