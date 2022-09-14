@@ -1,6 +1,7 @@
 /* 
 Case Study #1 - Danny's Diner
 Tool: MySQL
+Case Study Schema and Data
 */
 
 -- CREATE SCHEMA/TABLES AND INSERT DATA
@@ -8,7 +9,7 @@ CREATE DATABASE IF NOT EXISTS dannys_diner;
 USE dannys_diner;
 
 -- CREATE MENU TABLE
--- DROP TABLE IF EXISTS menu;
+DROP TABLE IF EXISTS menu;
 CREATE TABLE IF NOT EXISTS menu (
 	product_id INT,
     product_name VARCHAR(5),
@@ -23,7 +24,7 @@ VALUES
     (3, 'ramen', 12);
     
 -- CREATE MEMBERS TABLE
--- DROP TABLE IF EXISTS members;
+DROP TABLE IF EXISTS members;
 CREATE TABLE IF NOT EXISTS members (
 	customer_id VARCHAR(1),
     join_date DATE
@@ -36,7 +37,7 @@ VALUES
     ('B', '2021-01-09');
 
 -- CREATE SALES TABLE
--- DROP TABLE IF EXISTS sales;
+DROP TABLE IF EXISTS sales;
 CREATE TABLE IF NOT EXISTS sales (
 	customer_id VARCHAR(1),
     order_date DATE,
