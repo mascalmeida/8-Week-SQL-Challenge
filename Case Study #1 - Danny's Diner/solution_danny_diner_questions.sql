@@ -48,7 +48,7 @@ FROM (
 	) AS results
 GROUP BY customer_id;
 
-
+-- 6. ?
 
 
 
