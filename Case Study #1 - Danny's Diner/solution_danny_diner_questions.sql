@@ -62,8 +62,10 @@ SELECT customer_id, product_name, n_purchased FROM purchased_rank
 WHERE n_purchased_rank <= 1;
 
 -- 6. Which item was purchased first by the customer after they became a member?
--- Key learning point:
-
+-- Key learning point: in progress
+SELECT sales.product_id, sales.customer_id, sales.order_date 
+FROM sales
+INNER JOIN members ON sales.customer_id = members.customer_id;
 
 
 
