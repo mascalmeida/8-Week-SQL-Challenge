@@ -63,29 +63,28 @@ WHERE n_purchased_rank <= 1;
 
 -- 6. Which item was purchased first by the customer after they became a member?
 -- Key learning point: Combine WHERE and GROUP BY
-SELECT customer_id, product_name, order_date
+SELECT customer_id, product_name, join_date, order_date AS first_purchased_after_member
 FROM (
-	SELECT sales.customer_id, sales.product_id, sales.order_date 
+	SELECT sales.customer_id, sales.product_id, sales.order_date, members.join_date
 	FROM sales
 	INNER JOIN members ON sales.customer_id = members.customer_id
 	WHERE sales.order_date > members.join_date
 	GROUP BY customer_id
 	) AS id_table
 INNER JOIN menu ON id_table.product_id = menu.product_id
-ORDER BY order_date;
+ORDER BY first_purchased_after_member;
 
 -- 7. Which item was purchased just before the customer became a member?
 -- Key learning point: in progress
-SELECT customer_id, product_name, order_date
+SELECT customer_id, product_name, n_date
 FROM (
-	SELECT sales.customer_id, sales.product_id, sales.order_date 
+	SELECT sales.customer_id, sales.product_id, MAX(sales.order_date) AS n_date
 	FROM sales
 	INNER JOIN members ON sales.customer_id = members.customer_id
 	WHERE sales.order_date < members.join_date
-	GROUP BY customer_id
+	GROUP BY customer_id, product_id
 	) AS id_table
-INNER JOIN menu ON id_table.product_id = menu.product_id
-ORDER BY order_date;
+INNER JOIN menu ON id_table.product_id = menu.product_id;
 
 
 
