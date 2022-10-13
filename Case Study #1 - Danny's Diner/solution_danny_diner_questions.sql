@@ -76,15 +76,21 @@ ORDER BY first_purchased_after_member;
 
 -- 7. Which item was purchased just before the customer became a member?
 -- Key learning point: in progress
-SELECT customer_id, product_name, n_date
-FROM (
-	SELECT sales.customer_id, sales.product_id, MAX(sales.order_date) AS n_date
-	FROM sales
-	INNER JOIN members ON sales.customer_id = members.customer_id
-	WHERE sales.order_date < members.join_date
-	GROUP BY customer_id, product_id
-	) AS id_table
-INNER JOIN menu ON id_table.product_id = menu.product_id;
-
+WITH final_table AS(
+	SELECT customer_id, product_name, join_date, order_date AS last_purchased_before_member,
+		RANK() OVER (
+			PARTITION BY customer_id
+	        ORDER BY order_date DESC
+	    ) myrank
+	FROM (
+		SELECT sales.customer_id, sales.product_id, sales.order_date, members.join_date
+		FROM sales
+		INNER JOIN members ON sales.customer_id = members.customer_id
+		WHERE sales.order_date < members.join_date
+		) AS id_table
+	INNER JOIN menu ON id_table.product_id = menu.product_id
+)
+SELECT customer_id, product_name, join_date, last_purchased_before_member FROM final_table
+WHERE myrank = 1;
 
 
