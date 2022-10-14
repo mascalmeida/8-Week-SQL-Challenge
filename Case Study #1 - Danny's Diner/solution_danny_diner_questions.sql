@@ -75,7 +75,7 @@ INNER JOIN menu ON id_table.product_id = menu.product_id
 ORDER BY first_purchased_after_member;
 
 -- 7. Which item was purchased just before the customer became a member?
--- Key learning point: in progress
+-- Key learning point: SELECT columns from a RANK table
 WITH final_table AS(
 	SELECT customer_id, product_name, join_date, order_date AS last_purchased_before_member,
 		RANK() OVER (
@@ -92,5 +92,19 @@ WITH final_table AS(
 )
 SELECT customer_id, product_name, join_date, last_purchased_before_member FROM final_table
 WHERE myrank = 1;
+
+-- 8. What is the total items and amount spent for each member before they became a member?
+-- Key learning point: in progress
+SELECT customer_id, COUNT(customer_id) AS total_items, SUM(price) AS amout_spent
+FROM (
+	SELECT sales.customer_id, order_date, product_id 
+	FROM sales
+	INNER JOIN members ON members.customer_id = sales.customer_id
+	WHERE order_date < join_date
+	) AS before_member
+INNER JOIN menu ON menu.product_id = before_member.product_id
+GROUP BY customer_id
+ORDER BY customer_id;
+
 
 
